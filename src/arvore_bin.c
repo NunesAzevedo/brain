@@ -16,20 +16,19 @@
 #include "arvore_bin.h"
 #include "main.h"
 
-typedef struct
-{
-    float valor;
-    char *ID;
-    No *esq;
-    No *dir;
-} No;
-
 ArvoreBin *criaArvoreBin()
 {
     ArvoreBin *raiz = (ArvoreBin *)malloc(sizeof(ArvoreBin));
     if (raiz == NULL)
     {
-        printaErro("Erro ao alocar arvore binaria");
+        if (DEBUGGING)
+        {
+            printaErro("Erro ao alocar arvore binaria");
+        }
+        else
+        {
+            printaFalha();
+        }
     }
     return raiz;
 }
@@ -42,7 +41,6 @@ void liberaNo(No *no)
     }
     liberaNo(no->esq);
     liberaNo(no->dir);
-    liberaNo(no->ID);
     free(no);
     no = NULL;
 }
@@ -57,43 +55,58 @@ void liberaRaiz(ArvoreBin *arv)
     free(arv);
 }
 
+// Insere um novo nó na árvore binária e o ordena conforme o seu ID.
 // Para return:
 //  0: ERRO
 //  1: Tudo certo
-int insereArvoreBin(ArvoreBin *raiz, float valor, char *ID)
+int insereArvoreBin(ArvoreBin *raiz, int id, char *tipo_do_nodo)
 {
     if (DEBUGGING)
+    {
         printf("\n[DEBUG]: Comecando insercao na arvore binaria");
-    if (DEBUGGING)
-        printf("\n[DEBUG]: valor: %f", valor);
-    if (DEBUGGING)
-        printf("\n[DEBUG]: ID: %s", ID);
+        printf("\n[DEBUG]: id: %d", id);
+        printf("\n[DEBUG]: tipo_do_nodo: %s", tipo_do_nodo);
+    }
 
     if (raiz == NULL) // Verifica se a árvore existe
     {
-        printaErro("raiz eh um ponteiro NULL.");
+        if (DEBUGGING)
+        {
+            printaErro("raiz eh um ponteiro NULL.");
+        }
+        else
+        {
+            printaFalha();
+        }
     }
 
     No *novo_no = (No *)malloc(sizeof(No));
     if (novo_no == NULL)
     {
-        printaErro("Erro ao alocar um novo No.");
+        if (DEBUGGING)
+        {
+            printaErro("Erro ao alocar um novo No.");
+        }
+        else
+        {
+            printaFalha();
+        }
     }
 
-    novo_no->valor = valor;
+    novo_no->ID = id;
     if (DEBUGGING)
-        printf("\n[DEBUG]: novo_no->valor: %f", novo_no->valor);
+        printf("\n[DEBUG]: novo_no->id: %d", novo_no->ID);
 
-    strcpy(novo_no->ID, ID);
+    strcpy(novo_no->Tipo_do_Nodo, tipo_do_nodo);
     if (DEBUGGING)
-        printf("\n[DEBUG]: novo_no->ID: %s", novo_no->ID);
+        printf("\n[DEBUG]: novo_no->Tipo_do_Nodo: %s", novo_no->Tipo_do_Nodo);
 
     novo_no->esq = NULL;
     novo_no->dir = NULL;
 
     if (*raiz == NULL)
     {
-        // Se a árvore não tiver raíz, o novo No passa a ser a raíz
+        // Se a árvore não tiver raíz, o novo_no No passa a ser a raíz
         *raiz = novo_no;
     }
     else // Caso contrário, damos prosseguimento a árvore
@@ -101,41 +114,72 @@ int insereArvoreBin(ArvoreBin *raiz, float valor, char *ID)
         No *atual = *raiz;
         No *ant = NULL;
 
-        // Achar algum "nó" da árvore que esteja vazio para poder preencher
+        // A seguir, buscamos percorrer a árvore de forma que a inserção
+        // do novo nó siga a ordenação pelas ID's
         while (atual != NULL)
         {
+            // "ant" guarda a posição anterior a "atual", antes dela percorrer
+            // a arvore em busca de uma posição livre
             ant = atual;
-
-            // Verifica se o nó a ser inserido já existe
-            if (valor == atual->valor &&
-                strcmp(ID, atual->ID) == 0)
+            if (id == atual->ID)
             {
-                free(novo_no);
-                return 0;
-            }
-
-            // Verifica se o ID do nó inserido é um input e coloca
-            // ele na posição de folha
-            if (strcmp(ID, INP1) == 0)
-            {
-                // Se o nó da esquerda estiver livre, coloca ele lá,
-                // caso contrário, coloca no nó da direita
-                if (atual->esq == NULL)
+                if (DEBUGGING)
                 {
-                    atual = atual->esq;
+                    printaErro("ID ja existente na arvore binaria.");
                 }
                 else
                 {
-                    if (atual->dir == NULL)
-                    {
-                        atual = atual->dir;
-                    }
-                    else
-                    {
-                        printaErro("Na verificacao dos Nos das arvores, era para alguma estar livre, mas nao foi o que aconteceu.");
-                    }
+                    printaFalha();
                 }
             }
+            if (id > atual->ID)
+            {
+                atual = atual->dir;
+            }
+            else
+            {
+                atual = atual->esq;
+            }
+        }
+        // Após achar uma posição livre, inserimos o novo nó
+        if (id > ant->ID)
+        {
+            ant->dir = novo_no;
+        }
+        else
+        {
+            ant->esq = novo_no;
         }
     }
+    return 1;
+}
+
+// Remove um determinado nó da árvore binária
+No *removeNoAtual(No *atual)
+{
+    No *no1, *no2;
+    if (atual->esq == NULL)
+    {
+        no2 = atual->dir;
+        free(atual);
+        return no2;
+    }
+
+    no1 = atual;
+    no2 = atual->esq;
+    while (no2->dir != NULL)
+    {
+        no1 = no2;
+        no2 = no2->dir;
+    }
+
+    if (no1 != atual)
+    {
+        no1->dir = no2->esq;
+        no2->esq = atual->esq;
+    }
+
+    no2->dir = atual->dir;
+    free(atual);
+    return no2;
 }

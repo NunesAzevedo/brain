@@ -15,3 +15,7 @@ void printaErro(char* mensagem){
     printf("\n\n**************************************************************");
     abort();
 }
+
+void printaFalha(){
+    printf("\nFAIL");
+}
