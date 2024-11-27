@@ -37,7 +37,7 @@ void liberaNo(No *no)
 {
     if (no == NULL)
     {
-        return NULL;
+        return;
     }
     liberaNo(no->esq);
     liberaNo(no->dir);
@@ -45,14 +45,14 @@ void liberaNo(No *no)
     no = NULL;
 }
 
-void liberaRaiz(ArvoreBin *arv)
+void liberaArvBin(ArvoreBin *raiz)
 {
-    if (arv == NULL)
+    if (raiz == NULL)
     {
-        return NULL;
+        return;
     }
-    liberaNo(arv);
-    free(arv);
+    liberaNo(*raiz);
+    free(raiz);
 }
 
 // Insere um novo nó na árvore binária e o ordena conforme o seu ID.

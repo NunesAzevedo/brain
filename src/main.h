@@ -19,10 +19,10 @@
 
 
 // ID's possíveis
-const char AND2[] = "AND2";
-const char OR_2[] = "OR-2";
-const char XOR_2[] = "XOR2";
-const char NOT2[] = "NOT2";
-const char INP1[] = "INP1";
+#define AND2 "AND2";
+#define OR_2 "OR-2";
+#define XOR_2 "XOR2";
+#define NOT2 "NOT2";
+#define INP1 "INP1";
 
 #endif // MAIN_H
