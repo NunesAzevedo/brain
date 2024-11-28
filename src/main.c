@@ -20,11 +20,10 @@ const char INP1[TAM_TIPO_NODO] = "INP1";
 int main()
 {
     if (DEBUGGING)
-        printf("\n[DEBUG] Iniciando programa");
-        
+        printaComeco("Iniciando programa");
+
     // Árvore binária que representa o circuito lógico
     ArvoreBin *circuito = criaArvoreBin();
-
 
     FILE *brain = fopen("brain.txt", "rt");
     if (brain == NULL)
@@ -34,12 +33,20 @@ int main()
     // caso não seja '-1', ser uma string, basta verificar se esse número
     // não é o '-1', e se for o caso, proceder com a leitura do arquivo
 
+    if (DEBUGGING)
+        printaComeco("Lendo arquivo da arvore.");
+
     int id;
-    char *tipo_nodo = (char*)malloc(sizeof(char) * TAM_TIPO_NODO);
+    char *tipo_nodo = (char *)malloc(sizeof(char) * TAM_TIPO_NODO);
+    if (tipo_nodo == NULL)
+        printaErro("Erro ao alocar memória para o tipo de nodo");
+
     while (fscanf(brain, "%d", &id) == 1)
     {
         if (DEBUGGING)
-            printf("\n[DEBUG] Lendo arquivo da arvore.");
+        {
+            printf("\n[DEBUG] Valor do id lido: %d", id);
+        }
 
         if (id == -1) // Encerra a leitura do arquivo
         {
@@ -62,18 +69,23 @@ int main()
             (strcmp(tipo_nodo, NOT2) == 0) ||
             (strcmp(tipo_nodo, INP1) == 0))
         {
+            insereArvoreBin(circuito, id, tipo_nodo);
+        }
+        else
+        {
             if (DEBUGGING)
             {
-                printaErro("String lida eh invalida.");
+                printf("\n[DEBUG]: Tipo de nodo invalido: %s", tipo_nodo);
+                printaErro("Tipo de nodo invalido");
             }
             else
             {
                 printaFalha();
             }
         }
-
-        insereArvoreBin(circuito, id, tipo_nodo);
     }
+    if (DEBUGGING)
+        printaComeco("Fim da leitura do arquivo: brain");
     free(tipo_nodo);
     fclose(brain);
 
@@ -84,6 +96,7 @@ int main()
     // Como o arquivo segue o padrão de primeiro fornecer o ID, e após isso, o
     // valor dele, caso não seja '-1', vamos verificar ele primeiro para saber
     // se estamos ou não no fim do arquivo
+    printaComeco("Lendo arquivo de inputs");
     id = 0;
     float valor;
     while (1)
@@ -126,6 +139,8 @@ int main()
 
         alteraValorNoArvBin(circuito, id, valor);
     }
+    if (DEBUGGING)
+        printaComeco("Fim da leitura do arquivo de inputs");
 
     // Nesse ponto, o circuito está com as ID's, tipos de nodos e com os inputs
     // das folhas.
@@ -135,7 +150,7 @@ int main()
 
     if (DEBUGGING)
         printf("\n[DEBUG] Print do output final do circuito");
-    
+
     printf("\n%f", output_final);
 
     return 0;

@@ -1,7 +1,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-void printaErro(char*);
+void printaErro(char *);
 void printaFalha();
+void printaComeco(char *);
+void printBreakpoint();
 
-#endif //COMMON_H
+#endif // COMMON_H
