@@ -187,7 +187,7 @@ No *removeNoAtual(No *atual)
 // Permite alterar o valor de um nodo da árvore
 // id: Valor do ID do nodo da árvore que desejamos alterar o valor
 // valor: valor do output do nodo da arvore que vamos alterar
-float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
+void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
 {
     if (DEBUGGING)
     {
@@ -212,7 +212,8 @@ float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
         No *atual = raiz;
         No *ant = NULL;
 
-        if (DEBUGGING){
+        if (DEBUGGING)
+        {
             printf("\n[DEBUG] Buscando pelo nodo da arvore com mesma ID");
             printf("\n[DEBUG] [Antes do Loop] atual->ID\n", atual->ID);
         }
@@ -220,7 +221,8 @@ float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
         {
             if (id < atual->ID)
             {
-                if (DEBUGGING){
+                if (DEBUGGING)
+                {
                     printf("\n[DEBUG] [if( id < atual->ID)]");
                     printf("\n[DEBUG] id: ", id);
                     printf("\n[DEBUG] atual->ID: ", atual->ID);
@@ -229,7 +231,8 @@ float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
             }
             if (id > atual->ID)
             {
-                if (DEBUGGING){
+                if (DEBUGGING)
+                {
                     printf("\n[DEBUG] [if( id > atual->ID)]");
                     printf("\n[DEBUG] id: ", id);
                     printf("\n[DEBUG] atual->ID: ", atual->ID);
@@ -238,10 +241,95 @@ float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
             }
         }
         atual->output == valor;
-        if (DEBUGGING){
+        if (DEBUGGING)
+        {
             printf("\n[DEBUG] Término do loop");
             printf("\n[DEBUG] valor: ", valor);
             printf("\n[DEBUG] atual->output: ", atual->output);
         }
+    }
+}
+
+// Se o nodo não for folha, seu output é determinado palos outputs de seus filhos,
+// a depender do seu tipo de nodo (AND2, OR2, XOR2, NOT2, INP1).
+// Ela verifica o tipo de nodo de cada nodo, e executa a sua função lógica
+// tendo como inputs os valores de output de seus filhos
+void montaCircuito(ArvoreBin *raiz)
+{
+    if (DEBUGGING)
+    {
+        printf("\n[DEBUG] Montando circuito");
+    }
+
+    if (raiz == NULL)
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Ponteiro da arvore == NULL");
+        }
+        else
+        {
+            printaFalha();
+            return;
+        }
+    }
+
+    No *atual = *raiz;
+
+    if (atual == NULL)
+    {
+        if (DEBUGGING)
+        {
+            printaErro("raiz == NULL");
+        }
+        else
+        {
+            printaFalha();
+            return;
+        }
+    }
+    if (atual->esq != NULL)
+    {
+        montaCircuito(&(atual->esq));
+    }
+    if (atual->dir != NULL)
+    {
+        montaCircuito(&(atual->dir));
+    }
+
+    if (DEBUGGING)
+        printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
+
+    if (strcmp(atual->Tipo_do_Nodo, AND2) == 0)
+    {
+        atual->output = and2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, OR_2) == 0)
+    {
+        atual->output = or2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, XOR_2) == 0)
+    {
+        atual->output = xor2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, NOT2) == 0)
+    {
+        atual->output = not2(atual);
+    }
+    else
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Tipo de nodo invalido");
+        }
+        else
+        {
+            printaFalha();
+        }
+    }
+    if (DEBUGGING)
+    {
+        printf("\n[DEBUG] Output do nodo: %f", atual->output);
+        printf("\n[DEBUG] Fim da montagem do circuito\n");
     }
 }
