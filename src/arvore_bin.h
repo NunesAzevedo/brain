@@ -17,5 +17,6 @@ void liberaNo(No *);
 void liberaArvBin(ArvoreBin *);
 int insereArvoreBin(ArvoreBin *, int, char *);
 No *removeNoAtual(No *);
+float alteraValorNoArvBin(ArvoreBin *, int, float);
 
 #endif // ARVORE_BIN_H

@@ -183,3 +183,65 @@ No *removeNoAtual(No *atual)
     free(atual);
     return no2;
 }
+
+// Permite alterar o valor de um nodo da árvore
+// id: Valor do ID do nodo da árvore que desejamos alterar o valor
+// valor: valor do output do nodo da arvore que vamos alterar
+float alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
+{
+    if (DEBUGGING)
+    {
+        printf("\n[DEBUG] Alterando valor de um nodo da arvore binaria");
+        printf("\n[DEBUG] id: %d", id);
+        printf("\n[DEBUG] valor: %f", valor);
+    }
+
+    if (raiz == NULL)
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Ponteiro da arvore == NULL");
+        }
+        else
+        {
+            printaFalha();
+            return;
+        }
+
+        // Percorre a árvore em busca do ID fornecido
+        No *atual = raiz;
+        No *ant = NULL;
+
+        if (DEBUGGING){
+            printf("\n[DEBUG] Buscando pelo nodo da arvore com mesma ID");
+            printf("\n[DEBUG] [Antes do Loop] atual->ID\n", atual->ID);
+        }
+        while (atual->ID != id)
+        {
+            if (id < atual->ID)
+            {
+                if (DEBUGGING){
+                    printf("\n[DEBUG] [if( id < atual->ID)]");
+                    printf("\n[DEBUG] id: ", id);
+                    printf("\n[DEBUG] atual->ID: ", atual->ID);
+                }
+                atual = atual->esq;
+            }
+            if (id > atual->ID)
+            {
+                if (DEBUGGING){
+                    printf("\n[DEBUG] [if( id > atual->ID)]");
+                    printf("\n[DEBUG] id: ", id);
+                    printf("\n[DEBUG] atual->ID: ", atual->ID);
+                }
+                atual = atual->dir;
+            }
+        }
+        atual->output == valor;
+        if (DEBUGGING){
+            printf("\n[DEBUG] Término do loop");
+            printf("\n[DEBUG] valor: ", valor);
+            printf("\n[DEBUG] atual->output: ", atual->output);
+        }
+    }
+}
