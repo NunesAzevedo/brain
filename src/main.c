@@ -72,17 +72,22 @@ int main()
     if (input == NULL)
         printaErro("Falha ao abrir o arquivo: input");
 
+    // Como o arquivo segue o padrão de primeiro fornecer o ID, e após isso, o
+    // valor dele, caso não seja '-1', vamos verificar ele primeiro para saber
+    // se estamos ou não no fim do arquivo
+    id = 0;
     float valor;
     while (1)
     {
         if (DEBUGGING)
             printf("\n[DEBUG] Lendo arquivo com os inputs.");
 
-        if (fscanf(input, "%f", valor) != 1)
+        if (fscanf(input, "%d", id) != 1)
         {
             if (DEBUGGING)
             {
-                printf("\n[DEBUG]: valor lido nao eh uma entrada valida. Valor lido de 'valor': %d", valor);
+                printf("\n[DEBUG]: valor lido nao eh uma entrada valida. Valor lido de 'valor': %d", id);
+                printaErro("Valor lido eh invalido");
             }
             else
             {
@@ -90,15 +95,39 @@ int main()
             }
         }
 
-        if (valor == -1)
+        if (id == -1)
         {
             if (DEBUGGING)
-                printf("\n[DEBUG]: Valor de '-1' lido, fim do loop");
+                printf("\n[DEBUG]: Valor '-1' lido, fim do loop");
             break;
         }
 
-        
+        if (fscanf(circuito, "%f", valor) != 1)
+        {
+            if (DEBUGGING)
+            {
+                printf("\n[DEBUG] Valor lido eh invalido e igual a: ", valor);
+                printaErro("Valor invalido.");
+            }
+            else
+            {
+                printaFalha();
+            }
+        }
+
+        alteraValorNoArvBin(circuito, id, valor);
     }
+
+    // Nesse ponto, o circuito está com as ID's, tipos de nodos e com os inputs
+    // das folhas.
+
+    montaCircuito(circuito);
+    float output_final = OutputRaiz(circuito);
+
+    if (DEBUGGING)
+        printf("\n[DEBUG] Print do output final do circuito");
+    
+    printf("\n%f", output_final);
 
     return 0;
 }
