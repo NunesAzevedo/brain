@@ -19,10 +19,10 @@
 
 // Tipos de Nodo
 #define TAM_TIPO_NODO 5 // 4 letras + '\0'
-const char AND2[TAM_TIPO_NODO] = "AND2";
-const char OR_2[TAM_TIPO_NODO] = "OR-2";
-const char XOR_2[TAM_TIPO_NODO] = "XOR2";
-const char NOT2[TAM_TIPO_NODO] = "NOT2";
-const char INP1[TAM_TIPO_NODO] = "INP1";
+extern const char AND2[TAM_TIPO_NODO];
+extern const char OR_2[TAM_TIPO_NODO];
+extern const char XOR_2[TAM_TIPO_NODO];
+extern const char NOT2[TAM_TIPO_NODO];
+extern const char INP1[TAM_TIPO_NODO];
 
 #endif // MAIN_H

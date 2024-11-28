@@ -14,6 +14,7 @@
 #include <string.h>
 #include "common.h"
 #include "arvore_bin.h"
+#include "circuitos.h"
 #include "main.h"
 
 ArvoreBin *criaArvoreBin()
@@ -209,13 +210,12 @@ void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
         }
 
         // Percorre a árvore em busca do ID fornecido
-        No *atual = raiz;
-        No *ant = NULL;
+        No *atual = *raiz;
 
         if (DEBUGGING)
         {
             printf("\n[DEBUG] Buscando pelo nodo da arvore com mesma ID");
-            printf("\n[DEBUG] [Antes do Loop] atual->ID\n", atual->ID);
+            printf("\n[DEBUG] [Antes do Loop] atual->ID: %d\n", atual->ID);
         }
         while (atual->ID != id)
         {
@@ -224,8 +224,8 @@ void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
                 if (DEBUGGING)
                 {
                     printf("\n[DEBUG] [if( id < atual->ID)]");
-                    printf("\n[DEBUG] id: ", id);
-                    printf("\n[DEBUG] atual->ID: ", atual->ID);
+                    printf("\n[DEBUG] id: %d", id);
+                    printf("\n[DEBUG] atual->ID: %d", atual->ID);
                 }
                 atual = atual->esq;
             }
@@ -234,18 +234,18 @@ void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
                 if (DEBUGGING)
                 {
                     printf("\n[DEBUG] [if( id > atual->ID)]");
-                    printf("\n[DEBUG] id: ", id);
-                    printf("\n[DEBUG] atual->ID: ", atual->ID);
+                    printf("\n[DEBUG] id: %d", id);
+                    printf("\n[DEBUG] atual->ID: %d", atual->ID);
                 }
                 atual = atual->dir;
             }
         }
-        atual->output == valor;
+        atual->output = valor;
         if (DEBUGGING)
         {
             printf("\n[DEBUG] Término do loop");
-            printf("\n[DEBUG] valor: ", valor);
-            printf("\n[DEBUG] atual->output: ", atual->output);
+            printf("\n[DEBUG] valor: %f", valor);
+            printf("\n[DEBUG] atual->output: %f", atual->output);
         }
     }
 }
@@ -351,7 +351,7 @@ float OutputRaiz(ArvoreBin *raiz)
         else
         {
             printaFalha();
-            return;
+            return -1;
         }
     }
 
@@ -366,7 +366,6 @@ float OutputRaiz(ArvoreBin *raiz)
         else
         {
             printaFalha();
-            return;
         }
     }
 

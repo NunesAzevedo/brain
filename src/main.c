@@ -10,12 +10,21 @@
 #include "common.h"
 #include "main.h"
 
+// Tipos dos nodos do circuito
+const char AND2[TAM_TIPO_NODO] = "AND2";
+const char OR_2[TAM_TIPO_NODO] = "OR-2";
+const char XOR_2[TAM_TIPO_NODO] = "XOR2";
+const char NOT2[TAM_TIPO_NODO] = "NOT2";
+const char INP1[TAM_TIPO_NODO] = "INP1";
+
 int main()
 {
+    if (DEBUGGING)
+        printf("\n[DEBUG] Iniciando programa");
+        
     // Árvore binária que representa o circuito lógico
-    ArvoreBin *circuito;
-    if (circuito == NULL)
-        printaErro("Falha ao alocar a árvore 'brain'");
+    ArvoreBin *circuito = criaArvoreBin();
+
 
     FILE *brain = fopen("brain.txt", "rt");
     if (brain == NULL)
@@ -26,7 +35,7 @@ int main()
     // não é o '-1', e se for o caso, proceder com a leitura do arquivo
 
     int id;
-    char *tipo_nodo;
+    char *tipo_nodo = (char*)malloc(sizeof(char) * TAM_TIPO_NODO);
     while (fscanf(brain, "%d", &id) == 1)
     {
         if (DEBUGGING)
@@ -82,7 +91,7 @@ int main()
         if (DEBUGGING)
             printf("\n[DEBUG] Lendo arquivo com os inputs.");
 
-        if (fscanf(input, "%d", id) != 1)
+        if (fscanf(input, "%d", &id) != 1)
         {
             if (DEBUGGING)
             {
@@ -102,11 +111,11 @@ int main()
             break;
         }
 
-        if (fscanf(circuito, "%f", valor) != 1)
+        if (fscanf(input, "%f", &valor) != 1)
         {
             if (DEBUGGING)
             {
-                printf("\n[DEBUG] Valor lido eh invalido e igual a: ", valor);
+                printf("\n[DEBUG] Valor lido eh invalido e igual a: %f", valor);
                 printaErro("Valor invalido.");
             }
             else

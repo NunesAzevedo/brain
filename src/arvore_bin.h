@@ -17,7 +17,7 @@ void liberaNo(No *);
 void liberaArvBin(ArvoreBin *);
 int insereArvoreBin(ArvoreBin *, int, char *);
 No *removeNoAtual(No *);
-float alteraValorNoArvBin(ArvoreBin *, int, float);
+void alteraValorNoArvBin(ArvoreBin *, int, float);
 void montaCircuito(ArvoreBin *);
 float OutputRaiz(ArvoreBin *);
 
