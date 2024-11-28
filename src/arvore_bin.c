@@ -333,3 +333,47 @@ void montaCircuito(ArvoreBin *raiz)
         printf("\n[DEBUG] Fim da montagem do circuito\n");
     }
 }
+
+// Imprime o valor do output da raiz da arvore
+float OutputRaiz(ArvoreBin *raiz)
+{
+    if (DEBUGGING)
+    {
+        printf("\n[DEBUG] Imprimindo output da raiz da arvore");
+    }
+
+    if (raiz == NULL)
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Ponteiro da arvore == NULL");
+        }
+        else
+        {
+            printaFalha();
+            return;
+        }
+    }
+
+    No *atual = *raiz;
+
+    if (atual == NULL)
+    {
+        if (DEBUGGING)
+        {
+            printaErro("raiz == NULL");
+        }
+        else
+        {
+            printaFalha();
+            return;
+        }
+    }
+
+    if (DEBUGGING)
+    {
+        printf("\n[DEBUG] Output da raiz: %f", atual->output);
+    }
+
+    return atual->output;
+}
