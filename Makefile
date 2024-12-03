@@ -23,8 +23,12 @@ $(BIN_DIR):
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Set the default goal to 'all'
+.DEFAULT_GOAL := all
+
 all: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+	
 
 debug: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) -DDEBUG
@@ -33,6 +37,7 @@ run: $(TARGET)
 	$(TARGET)
 
 .PHONY: clean
+
 
 clean:
 	@rm -f $(BUILD_DIR)/*.o ./*.zip $(TARGET) core
