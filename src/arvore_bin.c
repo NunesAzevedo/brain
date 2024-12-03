@@ -49,9 +49,7 @@ void liberaNo(No *no)
 void liberaArvBin(ArvoreBin *raiz)
 {
     if (raiz == NULL)
-    {
         return;
-    }
     liberaNo(*raiz);
     free(raiz);
 }
@@ -72,25 +70,17 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     if (raiz == NULL) // Verifica se a árvore existe
     {
         if (DEBUGGING)
-        {
             printaErro("raiz eh um ponteiro NULL.");
-        }
         else
-        {
             printaFalha();
-        }
     }
     No *novo_no = (No *)malloc(sizeof(No));
     if (novo_no == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("Erro ao alocar um novo No.");
-        }
         else
-        {
             printaFalha();
-        }
     }
     novo_no->ID = id;
     if (DEBUGGING)
@@ -123,32 +113,20 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
             if (id == atual->ID)
             {
                 if (DEBUGGING)
-                {
                     printaErro("ID ja existente na arvore binaria.");
-                }
                 else
-                {
                     printaFalha();
-                }
             }
             if (id > atual->ID)
-            {
                 atual = atual->dir;
-            }
             else
-            {
                 atual = atual->esq;
-            }
         }
         // Após achar uma posição livre, inserimos o novo nó
         if (id > ant->ID)
-        {
             ant->dir = novo_no;
-        }
         else
-        {
             ant->esq = novo_no;
-        }
     }
     if (DEBUGGING)
         printaComeco("Fim da insercao na arvore binaria");
@@ -286,7 +264,7 @@ void montaCircuito(ArvoreBin *raiz)
             return;
         }
     }
-    
+
     if (atual->esq != NULL || (strcmp(atual->esq->Tipo_do_Nodo, "INP1") != 0))
     {
         if (DEBUGGING)
@@ -322,21 +300,15 @@ void montaCircuito(ArvoreBin *raiz)
     else
     {
         if (DEBUGGING)
-        {
             printaErro("Tipo de nodo invalido");
-        }
         else
-        {
             printaFalha();
-        }
     }
     if (DEBUGGING)
     {
         printf("\n[DEBUG] Output do nodo: %f", atual->output);
-        printf("\n[DEBUG] Fim da montagem do circuito\n");
-    }
-    if (DEBUGGING)
         printaComeco("Fim da montagem do circuito");
+    }
 }
 
 // Imprime o valor do output da raiz da arvore
@@ -363,21 +335,16 @@ float OutputRaiz(ArvoreBin *raiz)
     if (atual == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("raiz == NULL");
-        }
         else
-        {
             printaFalha();
-        }
     }
 
     if (DEBUGGING)
     {
         printf("\n[DEBUG] Output da raiz: %f", atual->output);
+        printaComeco("Fim da impressao do output da raiz da arvore");
     }
 
-    if (DEBUGGING)
-        printaComeco("Fim da impressao do output da raiz da arvore");
     return atual->output;
 }
