@@ -240,9 +240,7 @@ void montaCircuito(ArvoreBin *raiz)
     if (raiz == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("Ponteiro da arvore == NULL");
-        }
         else
         {
             printaFalha();
@@ -255,9 +253,7 @@ void montaCircuito(ArvoreBin *raiz)
     if (atual == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("raiz == NULL");
-        }
         else
         {
             printaFalha();
@@ -320,9 +316,7 @@ float OutputRaiz(ArvoreBin *raiz)
     if (raiz == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("Ponteiro da arvore == NULL");
-        }
         else
         {
             printaFalha();
