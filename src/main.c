@@ -96,7 +96,8 @@ int main()
     // Como o arquivo segue o padrão de primeiro fornecer o ID, e após isso, o
     // valor dele, caso não seja '-1', vamos verificar ele primeiro para saber
     // se estamos ou não no fim do arquivo
-    printaComeco("Lendo arquivo de inputs");
+    if (DEBUGGING)
+        printaComeco("Lendo arquivo de inputs");
     id = 0;
     float valor;
     while (1)
@@ -151,7 +152,7 @@ int main()
     if (DEBUGGING)
         printf("\n[DEBUG] Print do output final do circuito");
 
-    printf("\n%f", output_final);
+    printf("\n%f\n", output_final);
 
     return 0;
 }

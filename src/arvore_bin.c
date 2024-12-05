@@ -261,16 +261,22 @@ void montaCircuito(ArvoreBin *raiz)
         }
     }
 
-    if (atual->esq != NULL || (strcmp(atual->esq->Tipo_do_Nodo, "INP1") != 0))
+    if ((atual->esq != NULL) ^ (strcmp(atual->esq->Tipo_do_Nodo, "INP1") != 0))
     {
         if (DEBUGGING)
+        {
+            printf("\n[DEBUG] atual->esq != NULL || (strcmp(atual->esq->Tipo_do_Nodo, 'INP1') != 0)");
             printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
+        }
         montaCircuito(&(atual->esq));
     }
-    if (atual->dir != NULL || (strcmp(atual->dir->Tipo_do_Nodo, "INP1") != 0))
+    if ((atual->dir != NULL) ^ (strcmp(atual->dir->Tipo_do_Nodo, "INP1") != 0))
     {
         if (DEBUGGING)
+        {
+            printf("\n[DEBUG] atual->dir != NULL || (strcmp(atual->dir->Tipo_do_Nodo, 'INP1') != 0)");
             printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
+        }
         montaCircuito(&(atual->dir));
     }
 
