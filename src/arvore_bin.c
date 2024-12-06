@@ -46,8 +46,8 @@ void liberaNo(No *no)
     }
     liberaNo(no->esq);
     liberaNo(no->dir);
-    free(no);
     no = NULL;
+    free(no);
 }
 
 void liberaArvBin(ArvoreBin *raiz)
@@ -143,6 +143,8 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     }
     if (DEBUGGING)
         printaComeco("Fim da insercao na arvore binaria");
+    
+    liberaNo(novo_no);
     return 1;
 }
 
