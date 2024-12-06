@@ -36,6 +36,9 @@ debug: $(OBJ) $(BIN_DIR)
 run: $(TARGET)
 	$(TARGET)
 
+runw: $(TARGET).exe
+	$(TARGET).exe
+
 .PHONY: clean
 
 

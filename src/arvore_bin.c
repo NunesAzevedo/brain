@@ -31,6 +31,10 @@ ArvoreBin *criaArvoreBin()
             printaFalha();
         }
     }
+    No *no_raiz = (No *)malloc(sizeof(No));
+    no_raiz->esq = NULL;
+    no_raiz->dir = NULL;
+    free(no_raiz);
     return raiz;
 }
 
@@ -117,10 +121,19 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
                 else
                     printaFalha();
             }
+
             if (id > atual->ID)
+            {
+                if (DEBUGGING)
+                    printf("\n[DEBUG]: Descendo para a direita");
                 atual = atual->dir;
+            }
             else
+            {
+                if (DEBUGGING)
+                    printf("\n[DEBUG]: Descendo para a esquerda");
                 atual = atual->esq;
+            }
         }
         // Após achar uma posição livre, inserimos o novo nó
         if (id > ant->ID)
@@ -265,8 +278,8 @@ void montaCircuito(ArvoreBin *raiz)
     {
         if (DEBUGGING)
         {
-            printf("\n[DEBUG] atual->esq != NULL");
             printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
+            printf("\n[DEBUG] Descendo pra esquerda");
         }
         montaCircuito(&(atual->esq));
     }
@@ -274,7 +287,7 @@ void montaCircuito(ArvoreBin *raiz)
     {
         if (DEBUGGING)
         {
-            printf("\n[DEBUG] atual->dir != NULL");
+            printf("\n[DEBUG] Descendo pra direita");
             printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
         }
         montaCircuito(&(atual->dir));
@@ -315,7 +328,6 @@ void montaCircuito(ArvoreBin *raiz)
     if (DEBUGGING)
     {
         printf("\n[DEBUG] Output do nodo: %f", atual->output);
-        printaComeco("Fim da montagem do circuito");
     }
 }
 
