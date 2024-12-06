@@ -150,6 +150,7 @@ int main()
     montaCircuito(circuito);
     printaComeco("Fim da montagem do circuito");
     float output_final = OutputRaiz(circuito);
+    liberaArvBin(circuito);
 
     if (DEBUGGING)
         printf("\n[DEBUG] Print do output final do circuito\n");

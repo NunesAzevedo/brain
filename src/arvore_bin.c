@@ -135,15 +135,17 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
                 atual = atual->esq;
             }
         }
+        liberaNo(atual);
         // Após achar uma posição livre, inserimos o novo nó
         if (id > ant->ID)
             ant->dir = novo_no;
         else
             ant->esq = novo_no;
+        
+        liberaNo(ant);
     }
     if (DEBUGGING)
         printaComeco("Fim da insercao na arvore binaria");
-    
     liberaNo(novo_no);
     return 1;
 }
@@ -240,6 +242,7 @@ void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
             printf("\n[DEBUG] valor: %f", valor);
             printf("\n[DEBUG] atual->output: %f", atual->output);
         }
+        liberaNo(atual);
     }
 }
 
@@ -331,6 +334,8 @@ void montaCircuito(ArvoreBin *raiz)
     {
         printf("\n[DEBUG] Output do nodo: %f", atual->output);
     }
+
+    liberaNo(atual);
 }
 
 // Imprime o valor do output da raiz da arvore
@@ -365,6 +370,7 @@ float OutputRaiz(ArvoreBin *raiz)
         printf("\n[DEBUG] Output da raiz: %f", atual->output);
         printaComeco("Fim da impressao do output da raiz da arvore");
     }
-
-    return atual->output;
+    float output = atual->output;
+    liberaNo(atual);
+    return output;
 }
