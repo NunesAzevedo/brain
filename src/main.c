@@ -152,7 +152,7 @@ int main()
     if (DEBUGGING)
         printf("\n[DEBUG] Print do output final do circuito");
 
-    printf("\n%f\n", output_final);
+    printf("%.2f\n", output_final);
 
     return 0;
 }
