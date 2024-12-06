@@ -42,8 +42,8 @@ void liberaNo(No *no)
     }
     liberaNo(no->esq);
     liberaNo(no->dir);
-    free(no);
     no = NULL;
+    free(no);
 }
 
 void liberaArvBin(ArvoreBin *raiz)
@@ -66,7 +66,6 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
         printf("\n[DEBUG]: id: %d", id);
         printf("\n[DEBUG]: tipo_do_nodo: %s", tipo_do_nodo);
     }
-
     if (raiz == NULL) // Verifica se a árvore existe
     {
         if (DEBUGGING)
@@ -86,8 +85,8 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     if (DEBUGGING)
         printf("\n[DEBUG]: novo_no->id: %d", novo_no->ID);
 
-    // printBreakpoint();
     strcpy(novo_no->Tipo_do_Nodo, tipo_do_nodo);
+    // strncpy(novo_no->Tipo_do_Nodo, tipo_do_nodo, TAM_TIPO_NODO);
     if (DEBUGGING)
         printf("\n[DEBUG]: novo_no->Tipo_do_Nodo: %s", novo_no->Tipo_do_Nodo);
     novo_no->esq = NULL;
@@ -100,34 +99,65 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     }
     else // Caso contrário, damos prosseguimento a árvore
     {
-        No *atual = *raiz;
-        No *ant = NULL;
+        No *atual = (No *)malloc(sizeof(No));
+        atual = *raiz;
+        atual->dir = NULL;
+        atual->esq = NULL;
+        No *ant = (No *)malloc(sizeof(No));
+        ant = NULL;
 
         // A seguir, buscamos percorrer a árvore de forma que a inserção
         // do novo nó siga a ordenação pelas ID's
+        int num_loop = 0; // variavel de debug que indica o numero do loop
         while (atual != NULL)
         {
+            if (DEBUGGING)
+            {
+                printf("\n[DEBUG]: num_loop = %d", num_loop);
+                num_loop++;
+            }
             // "ant" guarda a posição anterior a "atual", antes dela percorrer
             // a arvore em busca de uma posição livre
             ant = atual;
+            // printBreakpoint();
             if (id == atual->ID)
             {
+                liberaNo(atual);
+                liberaNo(ant);
+                liberaNo(novo_no);
+                liberaArvBin(raiz);
+
                 if (DEBUGGING)
-                    printaErro("ID ja existente na arvore binaria.");
+                    printaErro("ID ja existente na arvore binaria");
                 else
+                {
                     printaFalha();
+                    return 0;
+                }
             }
             if (id > atual->ID)
+            {
+                if (DEBUGGING)
+                    printf("\n[DEBUG]: id > atual->ID");
                 atual = atual->dir;
+            }
             else
+            {
+                if (DEBUGGING)
+                    printf("\n[DEBUG]: id < atual->ID");
                 atual = atual->esq;
+            }
         }
         // Após achar uma posição livre, inserimos o novo nó
         if (id > ant->ID)
             ant->dir = novo_no;
         else
             ant->esq = novo_no;
+
+        liberaNo(atual);
+        liberaNo(ant);
     }
+    liberaNo(novo_no);
     if (DEBUGGING)
         printaComeco("Fim da insercao na arvore binaria");
     return 1;
@@ -261,7 +291,7 @@ void montaCircuito(ArvoreBin *raiz)
         }
     }
 
-    if (atual->esq != NULL)
+    if ((atual->esq != NULL) && (strcmp(atual->Tipo_do_Nodo, INP1) != 0))
     {
         if (DEBUGGING)
         {
@@ -270,7 +300,7 @@ void montaCircuito(ArvoreBin *raiz)
         }
         montaCircuito(&(atual->esq));
     }
-    if (atual->dir != NULL)
+    if ((atual->dir != NULL) && (strcmp(atual->Tipo_do_Nodo, INP1) != 0))
     {
         if (DEBUGGING)
         {
@@ -299,23 +329,9 @@ void montaCircuito(ArvoreBin *raiz)
     {
         atual->output = not2(atual);
     }
-    else if (strcmp(atual->Tipo_do_Nodo, INP1) == 0)
-    {
-        if (DEBUGGING)
-            printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
-        return;
-    }
-    else
-    {
-        if (DEBUGGING)
-            printaErro("Tipo de nodo invalido");
-        else
-            printaFalha();
-    }
     if (DEBUGGING)
     {
         printf("\n[DEBUG] Output do nodo: %f", atual->output);
-        printaComeco("Fim da montagem do circuito");
     }
 }
 

@@ -105,15 +105,15 @@ float not2(No *no)
     }
 }
 
-void input1(No *no, float valor)
+void input1(No *no)
 {
     if (DEBUGGING)
     {
         printf("\n[DEBUG]: Ativando chave INP1:");
-        printf("\n[DEBUG]: valor a ser inserido no No: %f", valor);
+        printf("\n[DEBUG]: valor a ser inserido no No: %f", no->output);
     }
 
-    no->esq->output = valor;
+    no->esq->output = no->output;
 
     if (DEBUGGING)
         printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);

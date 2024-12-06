@@ -140,6 +140,7 @@ int main()
 
         alteraValorNoArvBin(circuito, id, valor);
     }
+    fclose(input);
     if (DEBUGGING)
         printaComeco("Fim da leitura do arquivo de inputs");
 
@@ -147,10 +148,13 @@ int main()
     // das folhas.
 
     montaCircuito(circuito);
+    if (DEBUGGING)
+        printaComeco("Fim da montagem do circuito");
     float output_final = OutputRaiz(circuito);
+    liberaArvBin(circuito);
 
     if (DEBUGGING)
-        printf("\n[DEBUG] Print do output final do circuito");
+        printf("\n[DEBUG] Print do output final do circuito\n");
 
     printf("%.2f\n", output_final);
 

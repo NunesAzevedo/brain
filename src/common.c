@@ -37,6 +37,6 @@ void printBreakpoint()
     {
         printf("\n\n********************");
         printf("\n[DEBUG]: BREAKPOINT");
-        printf("\n\n********************");
+        printf("\n********************\n");
     }
 }
