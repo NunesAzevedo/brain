@@ -1,18 +1,19 @@
 # Compilador
 CC = gcc
-CFLAGS = -g -Wall -O0
-# CFLAGS = -g -O0  # Flag -Wall removida para funcionar no runcodes
+# CFLAGS = -g -Wall -O0
+CFLAGS = -g -O3  # Flag -Wall removida para funcionar no runcodes
 INCLUDE = $(wildcard src/*.h)
 SOURCES = $(wildcard src/*.c)
 OBJ = $(SOURCES:$(SRC_DIR)/%.c = $(SRC_DIR)/%.o)
+
+# Diretórios
+SRC_DIR = src
+BIN_DIR = bin
 
 # Target
 NOME_EXECUTAVEL = brain
 TARGET = $(BIN_DIR)/$(NOME_EXECUTAVEL)
 
-# Diretórios
-SRC_DIR = src
-BIN_DIR = bin
 
 # Criar diretórios bin e build
 $(BIN_DIR):
@@ -33,17 +34,15 @@ all: $(OBJ) $(BIN_DIR)
 debug: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) -DDEBUG
 
-run: $(TARGET)
+run:
 	$(TARGET)
 
-runw: $(TARGET).exe
-	$(TARGET).exe
 
 .PHONY: clean
 
 
 clean:
-	@rm -f $(BUILD_DIR)/*.o ./*.zip $(TARGET) core
+	@rm -f $(BUILD_DIR)/*.o ./*.zip $(BIN_DIR)/* core
 
 zip: 
 	@rm -f *.zip
