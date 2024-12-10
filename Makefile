@@ -46,4 +46,4 @@ clean:
 
 zip: 
 	@rm -f *.zip
-	zip -r $(NOME_EXECUTAVEL).zip $(SRC_DIR)/* ./Makefile
+	zip -r $(NOME_EXECUTAVEL).zip $(SRC_DIR)/* ./Makefile ./*.txt
