@@ -148,7 +148,8 @@ int main()
     // das folhas.
 
     montaCircuito(circuito);
-    printaComeco("Fim da montagem do circuito");
+    if (DEBUGGING)
+        printaComeco("Fim da montagem do circuito");
     float output_final = OutputRaiz(circuito);
     liberaArvBin(circuito);
 

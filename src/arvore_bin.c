@@ -17,35 +17,43 @@
 #include "circuitos.h"
 #include "main.h"
 
+No *criaNo()
+{
+    No *novo_no = (No *)malloc(sizeof(No));
+    if (novo_no == NULL)
+    {
+        if (DEBUGGING)
+            printaErro("Erro ao alocar um novo No.");
+        else
+            printaFalha();
+    }
+    novo_no->esq = NULL;
+    novo_no->dir = NULL;
+    return novo_no;
+}
+
+void liberaNo(No *no)
+{
+    if (no == NULL)
+        return;
+    liberaNo(no->esq);
+    liberaNo(no->dir);
+    no = NULL;
+    free(no);
+}
+
 ArvoreBin *criaArvoreBin()
 {
     ArvoreBin *raiz = (ArvoreBin *)malloc(sizeof(ArvoreBin));
     if (raiz == NULL)
     {
         if (DEBUGGING)
-            printaErro("Erro ao alocar arvore binaria");
+            printaErro("Erro ao alocar a raiz da arvore binaria.");
         else
             printaFalha();
     }
-    // No *no_raiz = (No *)malloc(sizeof(No));
-    // if(no_raiz == NULL) printaErro("Erro ao alocar um novo No: no_raiz");
-    // no_raiz = *raiz;
-    // no_raiz->esq = NULL;
-    // no_raiz->dir = NULL;
-    // free(no_raiz);
+    *raiz = NULL;
     return raiz;
-}
-
-void liberaNo(No *no)
-{
-    if (no == NULL)
-    {
-        return;
-    }
-    liberaNo(no->esq);
-    liberaNo(no->dir);
-    no = NULL;
-    free(no);
 }
 
 void liberaArvBin(ArvoreBin *raiz)
@@ -76,14 +84,7 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
         else
             printaFalha();
     }
-    No *novo_no = (No *)malloc(sizeof(No));
-    if (novo_no == NULL)
-    {
-        if (DEBUGGING)
-            printaErro("Erro ao alocar um novo No.");
-        else
-            printaFalha();
-    }
+    No *novo_no = criaNo();
     novo_no->ID = id;
     if (DEBUGGING)
         printf("\n[DEBUG]: novo_no->id: %d", novo_no->ID);
@@ -101,14 +102,8 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     }
     else // Caso contrário, damos prosseguimento a árvore
     {
-        // No *atual = *raiz;
-        // No *ant = NULL;
-
-        No *atual = (No *)malloc(sizeof(No));
-        if(atual == NULL) printaErro("Erro ao alocar um novo No: atual");
-
-        No *ant = (No *)malloc(sizeof(No));
-        if(ant == NULL) printaErro("Erro ao alocar um novo No: ant");
+        No *atual = criaNo();
+        No *ant = criaNo();
 
         atual = *raiz;
         ant = NULL;
@@ -125,6 +120,7 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
                 liberaNo(atual);
                 liberaNo(ant);
                 liberaNo(novo_no);
+                liberaArvBin(raiz);
                 if (DEBUGGING)
                     printaErro("ID ja existente na arvore binaria.");
                 else
@@ -150,7 +146,7 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
             ant->dir = novo_no;
         else
             ant->esq = novo_no;
-        
+
         liberaNo(ant);
     }
     if (DEBUGGING)
@@ -162,7 +158,9 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
 // Remove um determinado nó da árvore binária
 No *removeNoAtual(No *atual)
 {
-    No *no1, *no2;
+    // No *no1, *no2;
+    No *no1 = criaNo();
+    No *no2 = criaNo();
     if (atual->esq == NULL)
     {
         no2 = atual->dir;

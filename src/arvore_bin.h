@@ -14,6 +14,7 @@ typedef struct _no
 
 typedef No *ArvoreBin;
 
+No *criaNo();
 ArvoreBin *criaArvoreBin();
 void liberaNo(No *);
 void liberaArvBin(ArvoreBin *);
