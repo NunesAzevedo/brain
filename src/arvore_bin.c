@@ -23,18 +23,16 @@ ArvoreBin *criaArvoreBin()
     if (raiz == NULL)
     {
         if (DEBUGGING)
-        {
             printaErro("Erro ao alocar arvore binaria");
-        }
         else
-        {
             printaFalha();
-        }
     }
-    No *no_raiz = (No *)malloc(sizeof(No));
-    no_raiz->esq = NULL;
-    no_raiz->dir = NULL;
-    free(no_raiz);
+    // No *no_raiz = (No *)malloc(sizeof(No));
+    // if(no_raiz == NULL) printaErro("Erro ao alocar um novo No: no_raiz");
+    // no_raiz = *raiz;
+    // no_raiz->esq = NULL;
+    // no_raiz->dir = NULL;
+    // free(no_raiz);
     return raiz;
 }
 
@@ -90,7 +88,6 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     if (DEBUGGING)
         printf("\n[DEBUG]: novo_no->id: %d", novo_no->ID);
 
-    // printBreakpoint();
     strcpy(novo_no->Tipo_do_Nodo, tipo_do_nodo);
     if (DEBUGGING)
         printf("\n[DEBUG]: novo_no->Tipo_do_Nodo: %s", novo_no->Tipo_do_Nodo);
@@ -104,18 +101,30 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
     }
     else // Caso contrário, damos prosseguimento a árvore
     {
-        No *atual = *raiz;
-        No *ant = NULL;
+        // No *atual = *raiz;
+        // No *ant = NULL;
+
+        No *atual = (No *)malloc(sizeof(No));
+        if(atual == NULL) printaErro("Erro ao alocar um novo No: atual");
+
+        No *ant = (No *)malloc(sizeof(No));
+        if(ant == NULL) printaErro("Erro ao alocar um novo No: ant");
+
+        atual = *raiz;
+        ant = NULL;
 
         // A seguir, buscamos percorrer a árvore de forma que a inserção
         // do novo nó siga a ordenação pelas ID's
-        while (atual != NULL)
+        while (atual != NULL) // Aqui que está dando erro no windows
         {
             // "ant" guarda a posição anterior a "atual", antes dela percorrer
             // a arvore em busca de uma posição livre
             ant = atual;
             if (id == atual->ID)
             {
+                liberaNo(atual);
+                liberaNo(ant);
+                liberaNo(novo_no);
                 if (DEBUGGING)
                     printaErro("ID ja existente na arvore binaria.");
                 else
