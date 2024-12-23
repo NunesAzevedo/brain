@@ -18,11 +18,11 @@ float and2(No *no)
     {
         printf("\n\n*****************************");
         printf("\n[DEBUG]: Ativando chave AND2:");
-        printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);
-        printf("\n[DEBUG]: no->dir->output: %f", no->dir->output);
+        printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
+        printf("\n[DEBUG]: no->dir->output: %f", (no->dir)->output);
     }
 
-    if (no->esq->output == 1.0 && no->dir->output == 1.0)
+    if ((no->esq)->output == 1.0 && (no->dir)->output == 1.0)
     {
         if (DEBUGGING)
         {
@@ -48,10 +48,10 @@ float or2(No *no)
     {
         printf("\n\n*****************************");
         printf("\n[DEBUG]: Ativando chave OR2:");
-        printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);
-        printf("\n[DEBUG]: no->dir->output: %f", no->dir->output);
+        printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
+        printf("\n[DEBUG]: no->dir->output: %f", (no->dir)->output);
     }
-    if (no->esq->output == 0.0 && no->dir->output == 0.0)
+    if ((no->esq)->output == 0.0 && (no->dir)->output == 0.0)
     {
         if (DEBUGGING)
         {
@@ -77,12 +77,12 @@ float xor2(No *no)
     {
         printf("\n\n*****************************");
         printf("\n[DEBUG]: Ativando chave XOR2:");
-        printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);
-        printf("\n[DEBUG]: no->dir->output: %f", no->dir->output);
+        printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
+        printf("\n[DEBUG]: no->dir->output: %f", (no->dir)->output);
     }
 
-    if ((no->esq->output == 0.0 && no->dir->output == 0) ||
-        (no->esq->output == 1.0 && no->dir->output == 1.0))
+    if (((no->esq)->output == 0.0 && (no->dir)->output == 0) ||
+        ((no->esq)->output == 1.0 && (no->dir)->output == 1.0))
     {
         if (DEBUGGING)
         {
@@ -109,11 +109,11 @@ float not2(No *no)
     {
         printf("\n\n*****************************");
         printf("\n[DEBUG]: Ativando chave NOT2:");
-        printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);
-        printf("\n[DEBUG]: no->dir->output: %f", no->dir->output);
+        printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
+        printf("\n[DEBUG]: no->dir->output: %f", (no->dir)->output);
     }
 
-    if (no->esq->output == 0.0)
+    if ((no->esq)->output == 0.0)
     {
         if (DEBUGGING)
         {
@@ -142,11 +142,11 @@ void input1(No *no, float valor)
         printf("\n[DEBUG]: valor a ser inserido no No: %f", valor);
     }
 
-    no->esq->output = valor;
+    (no->esq)->output = valor;
 
     if (DEBUGGING)
     {
-        printf("\n[DEBUG]: no->esq->output: %f", no->esq->output);
+        printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
         printf("\n*****************************\n");
     }
 }

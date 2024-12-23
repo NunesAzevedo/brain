@@ -89,7 +89,7 @@ int main()
     free(tipo_nodo);
     fclose(brain);
 
-    FILE *input = fopen("input.txt", "rt");
+    FILE *input = fopen("inputs.txt", "rt");
     if (input == NULL)
         printaErro("Falha ao abrir o arquivo: input");
 

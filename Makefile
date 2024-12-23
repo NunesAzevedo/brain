@@ -46,4 +46,10 @@ clean:
 
 zip: 
 	@rm -f *.zip
-	zip -r $(NOME_EXECUTAVEL).zip $(SRC_DIR)/* ./Makefile ./*.txt
+	zip -r $(NOME_EXECUTAVEL).zip $(SRC_DIR)/* ./Makefile
+
+	
+# # Versão do zip para Windows
+# zipw:
+# 	@powershell -Command "Remove-Item *.zip -Force"
+# 	@powershell -Command "Set-Location $(CURDIR); Compress-Archive -Path $(SRC_DIR), ./Makefile, ./*.txt -DestinationPath $(NOME_EXECUTAVEL).zip"
