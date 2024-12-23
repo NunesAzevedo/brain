@@ -38,8 +38,8 @@ void liberaNo(No *no)
         return;
     liberaNo(no->esq);
     liberaNo(no->dir);
-    no = NULL;
     free(no);
+    no = NULL;
 }
 
 ArvoreBin *criaArvoreBin()
@@ -72,87 +72,96 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
 {
     if (DEBUGGING)
     {
-        printaComeco("Comecando insercao na arvore binaria");
-        printf("\n[DEBUG]: id: %d", id);
-        printf("\n[DEBUG]: tipo_do_nodo: %s", tipo_do_nodo);
+        printaComeco("Começando a inserção na árvore binária");
+        printf("\n[DEBUG]: ID: %d, Tipo_do_Nodo: %s", id, tipo_do_nodo);
     }
 
-    if (raiz == NULL) // Verifica se a árvore existe
+    // Verifica se a árvore existe
+    if (raiz == NULL)
     {
         if (DEBUGGING)
-            printaErro("raiz eh um ponteiro NULL.");
+            printaErro("Ponteiro para a árvore binária é NULL.");
         else
             printaFalha();
+        return 0; // ERRO
     }
-    No *novo_no = criaNo();
-    novo_no->ID = id;
-    if (DEBUGGING)
-        printf("\n[DEBUG]: novo_no->id: %d", novo_no->ID);
 
+    // Cria o novo nó para ser inserido
+    No *novo_no = criaNo();
+    if (novo_no == NULL)
+    {
+        if (DEBUGGING)
+            printaErro("Falha ao alocar memória para o novo nó.");
+        else
+            printaFalha();
+        return 0; // ERRO
+    }
+
+    // Inicializa os valores do novo nó
+    novo_no->ID = id;
     strcpy(novo_no->Tipo_do_Nodo, tipo_do_nodo);
-    if (DEBUGGING)
-        printf("\n[DEBUG]: novo_no->Tipo_do_Nodo: %s", novo_no->Tipo_do_Nodo);
     novo_no->esq = NULL;
     novo_no->dir = NULL;
 
+    // Se a árvore estiver vazia, o novo nó se torna a raiz
     if (*raiz == NULL)
     {
-        // Se a árvore não tiver raíz, o novo_no No passa a ser a raíz
         *raiz = novo_no;
+        if (DEBUGGING)
+            printaComeco("Novo nó inserido como raiz.");
+        return 1; // Sucesso
     }
-    else // Caso contrário, damos prosseguimento a árvore
+
+    // Percorre a árvore para encontrar a posição correta para inserção
+    No *atual = *raiz;
+    No *ant = NULL; // Guarda o nó anterior
+    while (atual != NULL)
     {
-        No *atual = criaNo();
-        No *ant = criaNo();
+        ant = atual;
 
-        atual = *raiz;
-        ant = NULL;
-
-        // A seguir, buscamos percorrer a árvore de forma que a inserção
-        // do novo nó siga a ordenação pelas ID's
-        while (atual != NULL) // Aqui que está dando erro no windows
+        if (id == atual->ID)
         {
-            // "ant" guarda a posição anterior a "atual", antes dela percorrer
-            // a arvore em busca de uma posição livre
-            ant = atual;
-            if (id == atual->ID)
-            {
-                liberaNo(atual);
-                liberaNo(ant);
-                liberaNo(novo_no);
-                liberaArvBin(raiz);
-                if (DEBUGGING)
-                    printaErro("ID ja existente na arvore binaria.");
-                else
-                    printaFalha();
-            }
-
-            if (id > atual->ID)
-            {
-                if (DEBUGGING)
-                    printf("\n[DEBUG]: Descendo para a direita");
-                atual = atual->dir;
-            }
+            if (DEBUGGING)
+                printaErro("ID já existente na árvore.");
             else
-            {
-                if (DEBUGGING)
-                    printf("\n[DEBUG]: Descendo para a esquerda");
-                atual = atual->esq;
-            }
-        }
-        liberaNo(atual);
-        // Após achar uma posição livre, inserimos o novo nó
-        if (id > ant->ID)
-            ant->dir = novo_no;
-        else
-            ant->esq = novo_no;
+                printaFalha();
 
-        liberaNo(ant);
+            free(novo_no); // Libera o nó que não será utilizado
+            return 0; // ERRO
+        }
+
+        if (id > atual->ID)
+        {
+            if (DEBUGGING)
+                printf("\n[DEBUG]: Descendo para a direita (ID atual: %d)", atual->ID);
+            atual = atual->dir;
+        }
+        else
+        {
+            if (DEBUGGING)
+                printf("\n[DEBUG]: Descendo para a esquerda (ID atual: %d)", atual->ID);
+            atual = atual->esq;
+        }
     }
+
+    // Insere o novo nó na posição encontrada
+    if (id > ant->ID)
+    {
+        ant->dir = novo_no;
+        if (DEBUGGING)
+            printf("\n[DEBUG]: Novo nó inserido à direita do ID %d", ant->ID);
+    }
+    else
+    {
+        ant->esq = novo_no;
+        if (DEBUGGING)
+            printf("\n[DEBUG]: Novo nó inserido à esquerda do ID %d", ant->ID);
+    }
+
     if (DEBUGGING)
-        printaComeco("Fim da insercao na arvore binaria");
-    liberaNo(novo_no);
-    return 1;
+        printaComeco("Fim da inserção na árvore binária");
+
+    return 1; // Sucesso
 }
 
 // Remove um determinado nó da árvore binária
@@ -194,63 +203,57 @@ void alteraValorNoArvBin(ArvoreBin *raiz, int id, float valor)
 {
     if (DEBUGGING)
     {
-        printaComeco("Alterando valor de um nodo da arvore binaria");
-        printf("\n[DEBUG] id: %d", id);
-        printf("\n[DEBUG] valor: %f", valor);
+        printaComeco("Alterando valor de um nodo da árvore binária");
+        printf("\n[DEBUG] ID: %d", id);
+        printf("\n[DEBUG] Valor: %.2f", valor);
     }
 
-    if (raiz == NULL)
+    // Verifica se a árvore ou a raiz é nula
+    if (raiz == NULL || *raiz == NULL)
     {
         if (DEBUGGING)
-        {
-            printaErro("Ponteiro da arvore == NULL");
-        }
+            printaErro("Árvore ou raiz nula.");
         else
-        {
             printaFalha();
-            return;
-        }
-
-        // Percorre a árvore em busca do ID fornecido
-        No *atual = *raiz;
-
-        if (DEBUGGING)
-        {
-            printf("\n[DEBUG] Buscando pelo nodo da arvore com mesma ID");
-            printf("\n[DEBUG] [Antes do Loop] atual->ID: %d\n", atual->ID);
-        }
-        while (atual->ID != id)
-        {
-            if (id < atual->ID)
-            {
-                if (DEBUGGING)
-                {
-                    printf("\n[DEBUG] [if( id < atual->ID)]");
-                    printf("\n[DEBUG] id: %d", id);
-                    printf("\n[DEBUG] atual->ID: %d", atual->ID);
-                }
-                atual = atual->esq;
-            }
-            if (id > atual->ID)
-            {
-                if (DEBUGGING)
-                {
-                    printf("\n[DEBUG] [if( id > atual->ID)]");
-                    printf("\n[DEBUG] id: %d", id);
-                    printf("\n[DEBUG] atual->ID: %d", atual->ID);
-                }
-                atual = atual->dir;
-            }
-        }
-        atual->output = valor;
-        if (DEBUGGING)
-        {
-            printf("\n[DEBUG] Término do loop");
-            printf("\n[DEBUG] valor: %f", valor);
-            printf("\n[DEBUG] atual->output: %f", atual->output);
-        }
-        liberaNo(atual);
+        return;
     }
+
+    // Percorre a árvore em busca do ID fornecido
+    No *atual = *raiz;
+
+    while (atual != NULL)
+    {
+        if (id == atual->ID)
+        {
+            if (strcmp(atual->Tipo_do_Nodo, INP1) == 0)
+            {
+                atual->output = valor; // Atualiza o valor do nodo folha
+                if (DEBUGGING)
+                    printf("\n[DEBUG] Valor atualizado para o nodo com ID %d: %.2f", id, valor);
+                return;
+            }
+            else
+            {
+                if (DEBUGGING)
+                    printaErro("Tentativa de alterar valor de nodo que não é folha.");
+                else
+                    printaFalha();
+                return;
+            }
+        }
+
+        // Navega para a esquerda ou direita com base no ID
+        if (id < atual->ID)
+            atual = atual->esq;
+        else
+            atual = atual->dir;
+    }
+
+    // Se o ID não foi encontrado
+    if (DEBUGGING)
+        printaErro("ID não encontrado na árvore.");
+    else
+        printaFalha();
 }
 
 // Se o nodo não for folha, seu output é determinado palos outputs de seus filhos,
@@ -262,10 +265,11 @@ void montaCircuito(ArvoreBin *raiz)
     if (DEBUGGING)
         printaComeco("Montando circuito");
 
-    if (raiz == NULL)
+    // Verifica se a raiz ou a árvore binária é nula
+    if (raiz == NULL || *raiz == NULL)
     {
         if (DEBUGGING)
-            printaErro("Ponteiro da arvore == NULL");
+            printaErro("Arvore ou raiz invalida.");
         else
         {
             printaFalha();
@@ -275,39 +279,30 @@ void montaCircuito(ArvoreBin *raiz)
 
     No *atual = *raiz;
 
-    if (atual == NULL)
+    // Verifica se o nodo atual é folha (basta verificar se é INP1)
+    if (strcmp(atual->Tipo_do_Nodo, INP1) == 0)
     {
         if (DEBUGGING)
-            printaErro("raiz == NULL");
-        else
-        {
-            printaFalha();
-            return;
-        }
+            printf("\n[DEBUG]: Nodo folha encontrado: %s. Output: %.2f", atual->Tipo_do_Nodo, atual->output);
+        return; // Não é necessário processar folhas
     }
 
+    // Processa recursivamente os filhos, se existirem
     if (atual->esq != NULL)
     {
         if (DEBUGGING)
-        {
-            printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
-            printf("\n[DEBUG] Descendo pra esquerda");
-        }
+            printf("\n[DEBUG]: Descendo para o filho esquerdo. Tipo: %s", atual->esq->Tipo_do_Nodo);
         montaCircuito(&(atual->esq));
     }
+
     if (atual->dir != NULL)
     {
         if (DEBUGGING)
-        {
-            printf("\n[DEBUG] Descendo pra direita");
-            printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
-        }
+            printf("\n[DEBUG]: Descendo para o filho direito. Tipo: %s", atual->dir->Tipo_do_Nodo);
         montaCircuito(&(atual->dir));
     }
 
-    if (DEBUGGING)
-        printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
-
+    // Realiza a operação lógica do nodo atual, com base no tipo do nodo
     if (strcmp(atual->Tipo_do_Nodo, AND2) == 0)
     {
         atual->output = and2(atual);
@@ -324,60 +319,45 @@ void montaCircuito(ArvoreBin *raiz)
     {
         atual->output = not2(atual);
     }
-    else if (strcmp(atual->Tipo_do_Nodo, INP1) == 0)
-    {
-        if (DEBUGGING)
-            printf("\n[DEBUG] Tipo do nodo: %s", atual->Tipo_do_Nodo);
-        return;
-    }
     else
     {
         if (DEBUGGING)
-            printaErro("Tipo de nodo invalido");
+            printaErro("Tipo de nodo invalido encontrado na arvore.");
         else
             printaFalha();
     }
+
     if (DEBUGGING)
     {
-        printf("\n[DEBUG] Output do nodo: %f", atual->output);
+        printf("\n[DEBUG]: Output do nodo [%s] com ID %d calculado: %.2f",
+               atual->Tipo_do_Nodo, atual->ID, atual->output);
     }
-
-    liberaNo(atual);
 }
 
 // Imprime o valor do output da raiz da arvore
 float OutputRaiz(ArvoreBin *raiz)
 {
     if (DEBUGGING)
-        printaComeco("Imprimindo output da raiz da arvore");
+        printaComeco("Obtendo o output da raiz da árvore binária");
 
-    if (raiz == NULL)
+    // Verifica se a árvore ou a raiz são nulas
+    if (raiz == NULL || *raiz == NULL)
     {
         if (DEBUGGING)
-            printaErro("Ponteiro da arvore == NULL");
+            printaErro("Árvore ou raiz inválida.");
         else
-        {
             printaFalha();
-            return -1;
-        }
+        return -1.0; // Valor especial indicando erro
     }
 
+    // Obtém o valor do output da raiz
     No *atual = *raiz;
-
-    if (atual == NULL)
-    {
-        if (DEBUGGING)
-            printaErro("raiz == NULL");
-        else
-            printaFalha();
-    }
 
     if (DEBUGGING)
     {
-        printf("\n[DEBUG] Output da raiz: %f", atual->output);
-        printaComeco("Fim da impressao do output da raiz da arvore");
+        printf("\n[DEBUG] Output da raiz com ID %d: %.2f", atual->ID, atual->output);
+        printaComeco("Fim da obtenção do output da raiz");
     }
-    float output = atual->output;
-    liberaNo(atual);
-    return output;
+
+    return atual->output;
 }
