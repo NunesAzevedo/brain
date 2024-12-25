@@ -10,12 +10,40 @@
 #include "common.h"
 #include "main.h"
 
-// Tipos dos nodos do circuito
+// *************
+// Tipos de Nodo
+// *************
+
+// Nodos Lógicos
 const char AND2[TAM_TIPO_NODO] = "AND2";
 const char OR_2[TAM_TIPO_NODO] = "OR-2";
 const char XOR_2[TAM_TIPO_NODO] = "XOR2";
 const char NOT2[TAM_TIPO_NODO] = "NOT2";
 const char INP1[TAM_TIPO_NODO] = "INP1";
+
+// Nodos Aritméticos
+const char ADD2[TAM_TIPO_NODO] = "ADD2";
+const char SUB2[TAM_TIPO_NODO] = "SUB2";
+const char MLT2[TAM_TIPO_NODO] = "MLT2";
+const char DIV2[TAM_TIPO_NODO] = "DIV2";
+const char MOD2[TAM_TIPO_NODO] = "MOD2";
+const char PERC[TAM_TIPO_NODO] = "PERC";
+const char SQR2[TAM_TIPO_NODO] = "SQR2";
+const char POW2[TAM_TIPO_NODO] = "POW2";
+const char BIN2[TAM_TIPO_NODO] = "BIN2";
+const char MV12[TAM_TIPO_NODO] = "MV12";
+const char MV22[TAM_TIPO_NODO] = "MV22";
+const char MV32[TAM_TIPO_NODO] = "MV32";
+const char CTE0[TAM_TIPO_NODO] = "CTE0";
+const char CTE1[TAM_TIPO_NODO] = "CTE1";
+
+// Nodos Condicionais
+const char IFGT[TAM_TIPO_NODO] = "IFGT";
+const char IFLT[TAM_TIPO_NODO] = "IFLT";
+const char IFEQ[TAM_TIPO_NODO] = "IFEQ";
+const char IPGT[TAM_TIPO_NODO] = "IPGT";
+const char IPLT[TAM_TIPO_NODO] = "IPLT";
+
 
 int main()
 {
