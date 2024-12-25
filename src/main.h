@@ -25,7 +25,7 @@
 // Nodos Lógicos
 extern const char AND2[TAM_TIPO_NODO];
 extern const char OR_2[TAM_TIPO_NODO];
-extern const char XOR_2[TAM_TIPO_NODO];
+extern const char XOR2[TAM_TIPO_NODO];
 extern const char NOT2[TAM_TIPO_NODO];
 extern const char INP1[TAM_TIPO_NODO];
 

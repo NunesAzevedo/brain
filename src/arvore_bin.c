@@ -311,7 +311,7 @@ void montaCircuito(ArvoreBin *raiz)
     {
         atual->output = or2(atual);
     }
-    else if (strcmp(atual->Tipo_do_Nodo, XOR_2) == 0)
+    else if (strcmp(atual->Tipo_do_Nodo, XOR2) == 0)
     {
         atual->output = xor2(atual);
     }

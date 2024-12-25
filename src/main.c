@@ -17,7 +17,7 @@
 // Nodos Lógicos
 const char AND2[TAM_TIPO_NODO] = "AND2";
 const char OR_2[TAM_TIPO_NODO] = "OR-2";
-const char XOR_2[TAM_TIPO_NODO] = "XOR2";
+const char XOR2[TAM_TIPO_NODO] = "XOR2";
 const char NOT2[TAM_TIPO_NODO] = "NOT2";
 const char INP1[TAM_TIPO_NODO] = "INP1";
 
@@ -43,7 +43,6 @@ const char IFLT[TAM_TIPO_NODO] = "IFLT";
 const char IFEQ[TAM_TIPO_NODO] = "IFEQ";
 const char IPGT[TAM_TIPO_NODO] = "IPGT";
 const char IPLT[TAM_TIPO_NODO] = "IPLT";
-
 
 int main()
 {
@@ -93,7 +92,7 @@ int main()
 
         if ((strcmp(tipo_nodo, AND2) == 0) ||
             (strcmp(tipo_nodo, OR_2) == 0) ||
-            (strcmp(tipo_nodo, XOR_2) == 0) ||
+            (strcmp(tipo_nodo, XOR2) == 0) ||
             (strcmp(tipo_nodo, NOT2) == 0) ||
             (strcmp(tipo_nodo, INP1) == 0))
         {
