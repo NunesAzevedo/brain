@@ -72,7 +72,7 @@ int main()
     {
         if (DEBUGGING)
         {
-            printf("\n[DEBUG] Valor do id lido: %d", id);
+            printf("\n[DEBUG]: Valor do id lido: %d", id);
         }
 
         if (id == -1) // Encerra a leitura do arquivo
@@ -175,8 +175,10 @@ int main()
     // das folhas.
 
     montaCircuito(circuito);
+    
     if (DEBUGGING)
         printaComeco("Fim da montagem do circuito");
+
     float output_final = OutputRaiz(circuito);
     liberaArvBin(circuito);
 
