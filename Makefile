@@ -14,11 +14,9 @@ BIN_DIR = bin
 NOME_EXECUTAVEL = brain
 TARGET = $(BIN_DIR)/$(NOME_EXECUTAVEL)
 
-
 # Criar diretórios bin e build
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
-
 
 # Compilar arquivos .c em arquivos .o
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h
@@ -29,7 +27,6 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h
 
 all: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
-	
 
 debug: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) -DDEBUG
@@ -37,19 +34,12 @@ debug: $(OBJ) $(BIN_DIR)
 run:
 	$(TARGET)
 
-
-.PHONY: clean
-
-
 clean:
 	@rm -f $(BUILD_DIR)/*.o ./*.zip $(BIN_DIR)/* core
 
+# Só funciona no linux (ow WSL)
 zip: 
 	@rm -f *.zip
 	zip -r $(NOME_EXECUTAVEL).zip $(SRC_DIR)/* ./Makefile
 
-	
-# # Versão do zip para Windows
-# zipw:
-# 	@powershell -Command "Remove-Item *.zip -Force"
-# 	@powershell -Command "Set-Location $(CURDIR); Compress-Archive -Path $(SRC_DIR), ./Makefile, ./*.txt -DestinationPath $(NOME_EXECUTAVEL).zip"
+.PHONY: all debug run clean zip
