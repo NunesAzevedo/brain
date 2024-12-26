@@ -26,7 +26,7 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/%.h
 .DEFAULT_GOAL := all
 
 all: $(OBJ) $(BIN_DIR)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) -lm
 
 debug: $(OBJ) $(BIN_DIR)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET) -DDEBUG

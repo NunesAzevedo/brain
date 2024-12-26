@@ -127,7 +127,7 @@ int insereArvoreBin(ArvoreBin *raiz, int id, const char *tipo_do_nodo)
                 printaFalha();
 
             free(novo_no); // Libera o nó que não será utilizado
-            return 0; // ERRO
+            return 0;      // ERRO
         }
 
         if (id > atual->ID)
@@ -318,6 +318,82 @@ void montaCircuito(ArvoreBin *raiz)
     else if (strcmp(atual->Tipo_do_Nodo, NOT2) == 0)
     {
         atual->output = not2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, ADD2) == 0)
+    {
+        atual->output = add2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, SUB2) == 0)
+    {
+        atual->output = sub2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, MLT2) == 0)
+    {
+        atual->output = mlt2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, DIV2) == 0)
+    {
+        atual->output = div2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, MOD2) == 0)
+    {
+        atual->output = mod2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, PERC) == 0)
+    {
+        atual->output = perc(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, SQR2) == 0)
+    {
+        atual->output = sqr2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, POW2) == 0)
+    {
+        atual->output = pow2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, BIN2) == 0)
+    {
+        atual->output = bin2(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, MV12) == 0)
+    {
+        atual->output = mv12(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, MV22) == 0)
+    {
+        atual->output = mv22(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, MV32) == 0)
+    {
+        atual->output = mv32(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, CTE0) == 0)
+    {
+        atual->output = cte0();
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, CTE1) == 0)
+    {
+        atual->output = cte1();
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, IFGT) == 0)
+    {
+        atual->output = ifgt(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, IFLT) == 0)
+    {
+        atual->output = iflt(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, IFEQ) == 0)
+    {
+        atual->output = ifet(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, IPGT) == 0)
+    {
+        atual->output = ipgt(atual);
+    }
+    else if (strcmp(atual->Tipo_do_Nodo, IPLT) == 0)
+    {
+        atual->output = iplt(atual);
     }
     else
     {

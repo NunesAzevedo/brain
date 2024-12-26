@@ -3,12 +3,14 @@
 
 #include "arvore_bin.h"
 
+// Nodos Lógicos
 float and2(No *);
 float or2(No *);
 float xor2(No *);
 float not2(No *);
 void input1(No *, float);
 
+// Nodos Aritméticos
 float add2(No *);
 float sub2(No *);
 float mlt2(No *);
@@ -24,6 +26,7 @@ float mv32(No *);
 float cte0();
 float cte1();
 
+// Nodos Condicionais
 float ifgt(No *);
 float iflt(No *);
 float ifet(No *);
