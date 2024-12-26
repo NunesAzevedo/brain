@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "common.h"
 #include "main.h"
@@ -148,5 +149,203 @@ void input1(No *no, float valor)
     {
         printf("\n[DEBUG]: no->esq->output: %f", (no->esq)->output);
         printf("\n*****************************\n");
+    }
+}
+
+float add2(No *no)
+{
+    return no->esq->output + no->dir->output;
+}
+
+float sub2(No *no)
+{
+    return no->esq->output - no->dir->output;
+}
+
+float mlt2(No *no)
+{
+    return no->esq->output * no->dir->output;
+}
+
+float div2(No *no)
+{
+    return no->esq->output / no->dir->output;
+}
+
+float mod2(No *no)
+{
+    return (int)no->esq->output % (int)no->dir->output;
+}
+
+float perc(No *no)
+{
+    return no->esq->output * no->dir->output / 100;
+}
+
+float sqr2(No *no)
+{
+    return sqrtf(no->esq->output + no->dir->output);
+}
+
+float pow2(No *no)
+{
+    return pow(no->esq->output + no->dir->output, 2);
+}
+
+float bin2(No *no)
+{
+    if (no->esq->output + no->dir->output == 0)
+        return 0.0;
+    else
+        return 1.0;
+}
+
+float memoria1;
+float memoria2;
+float memoria3;
+
+float mv12(No *no)
+{
+    if (no->dir->output == 0)
+    {
+        no->dir->output = memoria1;
+    }
+    else if (no->dir->output == 1.0)
+    {
+        memoria1 = no->esq->output;
+    }
+    else
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Entrada do MV12 nao foi 0 nem 1");
+        }
+        else
+        {
+            printaFalha();
+        }
+    }
+
+    return no->dir->output;
+}
+
+float mv22(No *no)
+{
+    if (no->dir->output == 0)
+    {
+        no->dir->output = memoria2;
+    }
+    else if (no->dir->output == 1.0)
+    {
+        memoria2 = no->esq->output;
+    }
+    else
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Entrada do MV12 nao foi 0 nem 1");
+        }
+        else
+        {
+            printaFalha();
+        }
+    }
+
+    return no->dir->output;
+}
+
+float mv32(No *no)
+{
+    if (no->dir->output == 0)
+    {
+        no->dir->output = memoria3;
+    }
+    else if (no->dir->output == 1.0)
+    {
+        memoria3 = no->esq->output;
+    }
+    else
+    {
+        if (DEBUGGING)
+        {
+            printaErro("Entrada do MV12 nao foi 0 nem 1");
+        }
+        else
+        {
+            printaFalha();
+        }
+    }
+
+    return no->dir->output;
+}
+
+float cte0()
+{
+    return 0.0;
+}
+
+float cte1()
+{
+    return 1.0;
+}
+
+
+float ifgt(No *no)
+{
+    if (no->esq->output > no->dir->output)
+    {
+        return 1.0;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
+float iflt(No *no)
+{
+    if (no->esq->output < no->dir->output)
+    {
+        return 1.0;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
+float ifet(No *no)
+{
+    if (no->esq->output == no->dir->output)
+    {
+        return 1.0;
+    }
+    else
+    {
+        return 0.0;
+    }
+}
+
+float ipgt(No *no)
+{
+    if (no->esq->output > no->dir->output)
+    {
+        return no->esq->output;
+    }
+    else
+    {
+        return no->dir->output;
+    }
+}
+
+float iplt(No *no)
+{
+    if (no->esq->output < no->dir->output)
+    {
+        return no->esq->output;
+    }
+    else
+    {
+        return no->dir->output;
     }
 }
