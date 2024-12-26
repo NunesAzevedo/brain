@@ -94,7 +94,26 @@ int main()
             (strcmp(tipo_nodo, OR_2) == 0) ||
             (strcmp(tipo_nodo, XOR2) == 0) ||
             (strcmp(tipo_nodo, NOT2) == 0) ||
-            (strcmp(tipo_nodo, INP1) == 0))
+            (strcmp(tipo_nodo, INP1) == 0) ||
+            (strcmp(tipo_nodo, ADD2) == 0) ||
+            (strcmp(tipo_nodo, SUB2) == 0) ||
+            (strcmp(tipo_nodo, MLT2) == 0) ||
+            (strcmp(tipo_nodo, DIV2) == 0) ||
+            (strcmp(tipo_nodo, MOD2) == 0) ||
+            (strcmp(tipo_nodo, PERC) == 0) ||
+            (strcmp(tipo_nodo, SQR2) == 0) ||
+            (strcmp(tipo_nodo, POW2) == 0) ||
+            (strcmp(tipo_nodo, BIN2) == 0) ||
+            (strcmp(tipo_nodo, MV12) == 0) ||
+            (strcmp(tipo_nodo, MV22) == 0) ||
+            (strcmp(tipo_nodo, MV32) == 0) ||
+            (strcmp(tipo_nodo, CTE0) == 0) ||
+            (strcmp(tipo_nodo, CTE1) == 0) ||
+            (strcmp(tipo_nodo, IFGT) == 0) ||
+            (strcmp(tipo_nodo, IFLT) == 0) ||
+            (strcmp(tipo_nodo, IFEQ) == 0) ||
+            (strcmp(tipo_nodo, IPGT) == 0) ||
+            (strcmp(tipo_nodo, IPLT) == 0))
         {
             insereArvoreBin(circuito, id, tipo_nodo);
         }
